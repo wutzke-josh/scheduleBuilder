@@ -10,13 +10,13 @@ struct classInfo {
 	int start;
 	int end;
 	bool day;
+	string professor;
+	int rating;
 }
 
 struct course {
 	string name;
-	classInfo sections[];
-	string professor;
-	int rating;
+	vector<classInfo> sections[];
 	bool operator== (const course& other){
 		return name==other.name;
 	}
