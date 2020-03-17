@@ -5,13 +5,16 @@
 
 using namespace std;
 
-
-struct course {
-	string name;
+struct classInfo {
 	string section;
 	int start;
 	int end;
-	bool day; // true if M W F
+	bool day;
+}
+
+struct course {
+	string name;
+	classInfo sections[];
 	string professor;
 	int rating;
 	bool operator== (const course& other){
