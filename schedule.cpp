@@ -58,9 +58,9 @@ void schedule::sortRating(){
 	}
 }
 
-bool schedule::checkConflict(classInfo section) {
+bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInfo section) {
 	bool conflict = false;
-	for(auto x: finalSchedule) {
+	for(auto x: schedule) {
 		if (x.second.day == section.day) {
 			if (!((x.second.end <= section.start) || (section.end <= x.second.start))) {
 				conflict = true;
@@ -72,21 +72,51 @@ bool schedule::checkConflict(classInfo section) {
 
 
 bool schedule::makeSchedule() {
-	for(auto x: myCourses) {
-		bool conflict;
-		int i = 0;
-		conflict = checkConflict(x.second[i]);
+	sortRating();
 
-		while (conflict && (i < x.second.size())) {
-			i++;
-			conflict = checkConflict(x.second[i]);
+	int bestScore = 0;
+
+	// keep track if any schedule works
+	bool somePass = false;
+
+	for (int offset = 0; offset < courseReq.size(); offset++) {
+		unordered_map<string, classInfo> currentSchedule;
+		int currentScore = 0;
+		bool thisPass = true;
+		for(int i = 0; i < courseReq.size(); i++) {
+			string courseName = courseReq[(i + offset) % courseReq.size()];
+			vector<classInfo> x = myCourses[courseName];
+			bool conflict;
+			int j = 0;
+			conflict = checkConflict(currentSchedule, x[j]);
+
+			while (conflict && (j < x.size())) {
+				j++;
+				conflict = checkConflict(currentSchedule, x[j]);
+			}
+
+			if (!conflict) {
+				currentSchedule[courseName] = x[j];
+				currentScore += x[j].rating;
+			} else {
+				thisPass = false;
+				break;
+			}
 		}
 
-		if (conflict) {
-			return false;
-		} else {
-			finalSchedule[x.first] = x.second[i];
+		// if this passed, then some passed
+		if (thisPass) {
+			somePass = true;
+		}
+		if ((currentScore > bestScore) && thisPass) {
+			finalSchedule = currentSchedule;
+			bestScore = currentScore;
 		}
 	}
-	return true;
+	// 'should' return true if it worked
+	return somePass;
+}
+
+void schedule::insertRequired(string required) {
+	courseReq.push_back(required);
 }

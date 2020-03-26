@@ -30,20 +30,20 @@ struct classInfo {
 
 class schedule {
 public:
-  	// void insertRequired(string required);
+  	void insertRequired(string required);
   	void insert(string name, classInfo myClass);
     // unordered_set<course> buildSchedule();
 	void sortRating();
 	void display();
 	bool makeSchedule();
 private:
-	//vector<string> courseReq;
+	vector<string> courseReq;
 	vector<string> addedClasses;
 
 	unordered_map<string,vector<classInfo>> myCourses;
 	unordered_map<string, classInfo> finalSchedule;
 
-	bool checkConflict(classInfo section);
+	bool checkConflict(unordered_map<string, classInfo> schedule, classInfo section);
 	void swap(classInfo& c1,classInfo& c2);
 	void quickSort(vector<classInfo>& thisCourse, int start, int n);
 	int pivot(vector<classInfo>& thisCourse, int n, int pi,int start);
