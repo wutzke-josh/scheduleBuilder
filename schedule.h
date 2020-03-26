@@ -16,9 +16,9 @@ struct classInfo {
 	string professor;
 	int rating;
 	bool operator> (const classInfo& other){
-		return rating > other->rating;
+		return rating > other.rating;
 	}
-}
+};	
 
 // struct course {
 // 	string name;
@@ -30,18 +30,22 @@ struct classInfo {
 
 class schedule {
 public:
-	schedule();
-  	~schedule();
+	// schedule();
+ //  	~schedule();
   	//void insertRequired(string required);
   	void insert(string name, classInfo myClass);
  //  unordered_set<course> buildSchedule();
-	// void sortRating(course myCourses[]);
+	void sortRating();
+	void display();
 private:
 	//vector<string> courseReq;
 	vector<string> addedClasses;
 
 	unordered_map<string,vector<classInfo>> myCourses;
+	void swap(classInfo& c1,classInfo& c2);
+	void quickSort(vector<classInfo>& thisCourse, int start, int n);
+	int pivot(vector<classInfo>& thisCourse, int n, int pi,int start);
 
-}
+};
 
 #endif
