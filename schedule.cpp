@@ -6,11 +6,8 @@ void schedule::insert(string name, classInfo myClass){
 	myCourses[name].push_back(myClass);
 }
 void schedule::display(){
-	for(auto x: myCourses){
-		cout << x.first << ":" << endl;
-		for(auto y: x.second){
-			cout << y.section << " " <<y.rating << endl;
-		}
+	for(auto x: finalSchedule){
+		cout << x.first << ' ' << x.second.section << ' ' << x.second.rating << endl;
 	}
 }
 
@@ -59,4 +56,37 @@ void schedule::sortRating(){
 		quickSort(x->second,0,(x->second).size());
 		x++;
 	}
+}
+
+bool schedule::checkConflict(classInfo section) {
+	bool conflict = false;
+	for(auto x: finalSchedule) {
+		if (x.second.day == section.day) {
+			if (!((x.second.end <= section.start) || (section.end <= x.second.start))) {
+				conflict = true;
+			}
+		}
+	}
+	return conflict;
+}
+
+
+bool schedule::makeSchedule() {
+	for(auto x: myCourses) {
+		bool conflict;
+		int i = 0;
+		conflict = checkConflict(x.second[i]);
+
+		while (conflict && (i < x.second.size())) {
+			i++;
+			conflict = checkConflict(x.second[i]);
+		}
+
+		if (conflict) {
+			return false;
+		} else {
+			finalSchedule[x.first] = x.second[i];
+		}
+	}
+	return true;
 }
