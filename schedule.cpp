@@ -7,6 +7,7 @@ void schedule::insert(string name, classInfo myClass){
 }
 void schedule::display(){
 	for(auto x: myCourses){
+		cout << x.first << ":" << endl;
 		for(auto y: x.second){
 			cout << y.section << " " <<y.rating << endl;
 		}
@@ -23,9 +24,9 @@ int schedule::pivot(vector<classInfo>& thisCourse, int n, int pi,int start){
 	int lo = start;
 	int hi = start+n-2;
 	while(lo<=hi){
-		if(thisCourse[lo].rating<=thisCourse[start+n-1].rating){
+		if(thisCourse[lo].rating>=thisCourse[start+n-1].rating){
 			lo++;
-		}else if(thisCourse[hi].rating>thisCourse[start+n-1].rating){
+		}else if(thisCourse[hi].rating<thisCourse[start+n-1].rating){
 			hi --;
 		}else{
 			swap(thisCourse[lo],thisCourse[hi]);
@@ -53,8 +54,9 @@ void schedule::quickSort(vector<classInfo>& thisCourse, int start, int n){
 	}
 }
 void schedule::sortRating(){
-	for(auto x: myCourses){
-		quickSort(x.second,0,(x.second).size());
+	auto x = myCourses.begin();
+	while (x != myCourses.end()) {
+		quickSort(x->second,0,(x->second).size());
+		x++;
 	}
-
 }
