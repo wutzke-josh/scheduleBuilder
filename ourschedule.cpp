@@ -71,10 +71,10 @@ int main(int argc, char *argv[]){
 
 	test.insertRequired("ece 311");
 	test.insertRequired("ece 321");
-	test.insertRequired("ece 325");
 	test.insertRequired("stat 235");
-	test.insertRequired("ch e 243");
 	test.insertRequired("soc 225");
+	test.insertRequired("ece 325");
+	test.insertRequired("ch e 243");
 
 	section1 = {"EB01",9,10,true,"David Smith",3};
 	test.insert("ece 311",section1);

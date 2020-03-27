@@ -60,15 +60,14 @@ void schedule::sortRating(){
 }
 
 bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInfo section) {
-	bool conflict = false;
 	for(auto x: schedule) {
 		if (x.second.day == section.day) {
 			if (!((x.second.end <= section.start) || (section.end <= x.second.start))) {
-				conflict = true;
+				return true;
 			}
 		}
 	}
-	return conflict;
+	return false;
 }
 
 void schedule::computeScore() {
@@ -118,7 +117,7 @@ bool schedule::makeSchedule() {
 			int j = 0;
 			conflict = checkConflict(currentSchedule, x[j]);
 
-			while (conflict && (j < x.size())) {
+			while (conflict && (j < (x.size()-1))) {
 				j++;
 				conflict = checkConflict(currentSchedule, x[j]);
 			}
