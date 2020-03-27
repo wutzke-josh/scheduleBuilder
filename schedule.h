@@ -15,9 +15,7 @@ struct classInfo {
 	bool day;
 	string professor;
 	int rating;
-	bool operator> (const classInfo& other){
-		return rating > other.rating;
-	}
+	int score = 0;
 };	
 
 struct classPreferences {
@@ -42,16 +40,21 @@ public:
 	void sortRating();
 	void display();
 	bool makeSchedule();
+	void preferMorn(bool pref = true);
+	void preferAft(bool pref = true);
+	void preferProf(bool pref = true);
 private:
 	vector<string> courseReq;
 	vector<string> addedClasses;
 
+	classPreferences prefer;
 
+	void checkPrefs();
 
 	unordered_map<string,vector<classInfo>> myCourses;
 	unordered_map<string, classInfo> finalSchedule;
 
-	int computeScore(const classInfo& section);
+	void computeScore();
 	bool checkConflict(unordered_map<string, classInfo> schedule, classInfo section);
 	void swap(classInfo& c1,classInfo& c2);
 	void quickSort(vector<classInfo>& thisCourse, int start, int n);

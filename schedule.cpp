@@ -5,9 +5,10 @@ using namespace std;
 void schedule::insert(string name, classInfo myClass){
 	myCourses[name].push_back(myClass);
 }
+
 void schedule::display(){
 	for(auto x: finalSchedule){
-		cout << x.first << ' ' << x.second.section << ' ' << x.second.rating << endl;
+		cout << x.first << ' ' << x.second.section << ' ' << x.second.rating << ' ' << x.second.score << endl;
 	}
 }
 
@@ -21,9 +22,9 @@ int schedule::pivot(vector<classInfo>& thisCourse, int n, int pi,int start){
 	int lo = start;
 	int hi = start+n-2;
 	while(lo<=hi){
-		if(thisCourse[lo].rating>=thisCourse[start+n-1].rating){
+		if(thisCourse[lo].score>=thisCourse[start+n-1].score){
 			lo++;
-		}else if(thisCourse[hi].rating<thisCourse[start+n-1].rating){
+		}else if(thisCourse[hi].score<thisCourse[start+n-1].score){
 			hi --;
 		}else{
 			swap(thisCourse[lo],thisCourse[hi]);
@@ -70,20 +71,35 @@ bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInf
 	return conflict;
 }
 
-int schedule::computeScore(const classInfo& section) {
+void schedule::computeScore() {
 	// if the rating is 5 or below, subtract a penalty
 	// factor so that you don't get schedules with
 	// five 10's and one 1
-	int score = 0;
-	if (section.rating <= 5) {
-		score -= (6 - section.rating) * 2;
+	for( auto subject: myCourses) {
+		for (int i = 0; i < subject.second.size(); i++) {
+			classInfo section = subject.second[i];
+			int score = 0;
+
+			if (prefer.prof) {
+				if (section.rating <= 5) {
+					score -= (6 - section.rating) * 2;
+				}
+				score += section.rating;
+			}
+			if (prefer.morning) {
+				score += 24 - section.start;
+			} else if (prefer.afternoon) {
+				score += section.start;
+			}
+
+			myCourses[subject.first][i].score = score;
+		}
 	}
-	score += section.rating;
-	return score;
 }
 
 
 bool schedule::makeSchedule() {
+	computeScore();
 	sortRating();
 
 	int bestScore = 0;
@@ -110,7 +126,7 @@ bool schedule::makeSchedule() {
 			if (!conflict) {
 				currentSchedule[courseName] = x[j];
 
-				currentScore += computeScore(x[j]);
+				currentScore += x[j].score;
 			} else {
 				thisPass = false;
 				break;
@@ -132,4 +148,30 @@ bool schedule::makeSchedule() {
 
 void schedule::insertRequired(string required) {
 	courseReq.push_back(required);
+}
+
+
+void schedule::preferMorn(bool pref) {
+	prefer.morning = pref;
+	if (pref) {
+		prefer.afternoon = false;
+	}
+	checkPrefs();
+}
+
+void schedule::preferAft(bool pref) {
+	prefer.afternoon = pref;
+	if (pref) {
+		prefer.morning = false;
+	}
+	checkPrefs();
+}
+void schedule::preferProf(bool pref) {
+	prefer.prof = pref;
+	checkPrefs();
+}
+void schedule::checkPrefs() {
+	if(!(prefer.prof || prefer.morning || prefer.afternoon)) {
+		prefer.prof = true;
+	}
 }

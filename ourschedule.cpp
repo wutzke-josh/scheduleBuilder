@@ -26,6 +26,8 @@ int main(){
 	test.insert("sad", section1);
 
 
+	test.preferMorn();
+	test.preferProf(false);
 	bool itworked = test.makeSchedule();
 	if (itworked) {
 		test.display();
