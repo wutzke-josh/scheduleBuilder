@@ -4,7 +4,7 @@
 #include "schedule.h"
 using namespace std;
 
-int readFile(char file_name[], schedule& ourSchedule){
+int readFile(char file_name[], schedule& userSchedule){
 	ifstream reading;
 	string mystr; 
 	string mysub;
@@ -19,117 +19,141 @@ int readFile(char file_name[], schedule& ourSchedule){
 			if(mystr[0]=='C'){
 				cutoff = mystr.find(',');
 				className = mystr.substr(2,cutoff-2);
-				ourSchedule.insertRequired(className);
-
-				cout << "Class " << className << endl;
+				userSchedule.insertRequired(className);
 			}else{
 				cutoff = mystr.find(',');
 				thisClass.section = mystr.substr(0,cutoff);
-				//cout << "section " << thisClass.section << ' ';
 				mysub = mystr.substr(cutoff+1);
 				cutoff = mysub.find(',');
-
 				thisClass.start = stoi(mysub.substr(0,cutoff));
-				//cout << "start " << thisClass.start<< ' ';
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				thisClass.end = stoi(mysub.substr(0,cutoff));
-				//cout << "end " << thisClass.end<< ' ';
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				whatDay = mysub.substr(0,cutoff);
-				//cout << "day " << whatDay << ' ';
 				if(whatDay == "true"){
-					//cout << "in true" << ' ';
 					thisClass.day = true;
 				}else{
-					//cout << "in false" << ' ';
 					thisClass.day = false;
 				}
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				thisClass.professor = mysub.substr(0,cutoff);
-				//cout << "prof " << thisClass.professor<< ' ';
 				mysub = mysub.substr(cutoff+1);
 				thisClass.rating = stoi(mysub);
-				//cout << "rate " << thisClass.rating << endl;
-
-				ourSchedule.insert(className,thisClass);
+				userSchedule.insert(className,thisClass);
 			}
 		}
 	}
 }
+void welcomePrompt(schedule& userSchedule){
+	cout << "Welcome to schedule builder! Please select your preferences: " << endl;
+	cout << "Do you have a preference for morning or afternoon classes? " << endl;
+	cout << "Please select: morning, afternoon, n/a: ";
+	string selection;
+	bool answered = false;
+	bool prof_only = false;
+	while(!answered){
+		cin >> selection;
+		if(selection == "morning"){
+			userSchedule.preferMorn(true);
+			answered = true;
+		}else if(selection == "afternoon"){
+			userSchedule.preferAft(true);
+			answered = true;
+		}else if(selection == "n/a"){
+			answered = true;
+			prof_only = true;
+		}else{
+			cout << "Please select a valid preference (morning, afternoon, n/a): ";
+		}
+	}
+	answered = false;
+	if(!prof_only){
+		cout << "Would you like to combine your preference with a high professor rating?(y/n) ";
+		while(!answered){
+			cin >> selection;
+			if(selection == "y" || selection == "Y" ){
+				userSchedule.preferProf(true);
+				answered = true;
+			}else if(selection=="n" || selection=="N"){
+				userSchedule.preferProf(false);
+				answered = true;
+			}else{
+				cout << "Please select a valid preference (y/n): ";	
+			}
+		}
+	}
+
+}
 
 int main(int argc, char *argv[]){
-	// schedule ourSchedule;
-	// cout << "before" << endl;
-	// readFile(argv[1],ourSchedule);
-	// cout << "after" << endl;
+	schedule userSchedule;
+	cout << "before" << endl;
+	readFile(argv[1],userSchedule);
+	cout << "after" << endl;
 
-	schedule test;
-	classInfo section1;
-
-	test.insertRequired("soc 225");
-	test.insertRequired("ch e 243");
-	test.insertRequired("stat 235");
-	test.insertRequired("ece 325");
-	test.insertRequired("ece 321");
-	test.insertRequired("ece 311");
-
-	section1 = {"EB01",9,10,true,"David Smith",3};
-	test.insert("ece 311",section1);
-	section1 = {"EB02",13,14,false,"Priyanka Emayan",10};
-	test.insert("ece 311",section1);
-	section1 = {"EB03",9,10,true,"Mateo Ruiz",8};
-	test.insert("ece 311",section1);
-
-	section1 = {"B1",11,12,true,"Megan Nemeth",6};
-	test.insert("ece 321",section1);
-	section1 = {"B2",14,15,true,"Dustin Meyers",7};
-	test.insert("ece 321",section1);
-
-	section1 = {"EB1",13,14,false,"Anna Hayworth",4};
-	test.insert("ece 325",section1);
-
-	section1 = {"B1",14,15,false,"Muhammad Shareef",9};
-	test.insert("stat 235",section1);
-	section1 = {"B2",8,9,true,"Jennifer Fawcett",5};
-	test.insert("stat 235",section1);
-
-	section1 = {"EB01",8,9,true,"Miriam Barasha",8};
-	test.insert("ch e 243",section1);
-	section1 = {"EB02",11,12,true,"Lydia Johnstone",1};
-	test.insert("ch e 243",section1);
-	section1 = {"EB03",8,9,false,"Alan Campbell",8};
-	test.insert("ch e 243",section1);
-
-	section1 = {"A1",13,14,false,"Andy Dufresne",7};
-	test.insert("soc 225",section1);
-	// section1 = {"ebo2",9,10,false,"pescke",7};
-	// test.insert("math",section1);
-
-	// section1 = {"eb01", 13, 14, true, "mar",10};
-	// test.insert("science", section1);
-	// section1 = {"eb02", 9, 10, true, "saiyu",7};
-	// test.insert("science", section1);
-
-	// section1 = {"eb01", 10, 11, true, "hello",2};
-	// test.insert("sad", section1);
-	// section1 = {"eb02", 11, 14, true, "this",7};
-	// test.insert("sad", section1);
-
-
-	test.preferMorn();
-	cout << "morn" << endl;
-	test.preferProf(false);
-	cout << "prof" << endl;
-	bool itworked = test.makeSchedule();
-	cout << "made" << endl;
+	welcomePrompt(userSchedule);
+	bool itworked = userSchedule.makeSchedule();
 	if (itworked) {
-		test.display();
+		userSchedule.display();
 	} else {
-		cout << "uhoh :(" << endl;
+		cout << "Sorry! A schedule cannot be made with this classes" << endl;
 	}
 
 	return 0;
 }
+
+	// schedule userSchedule;
+	// classInfo section1;
+	// userSchedule.insertRequired("soc 225");
+	// userSchedule.insertRequired("ch e 243");
+	// userSchedule.insertRequired("stat 235");
+	// userSchedule.insertRequired("ece 325");
+	// userSchedule.insertRequired("ece 321");
+	// userSchedule.insertRequired("ece 311");
+
+	// section1 = {"EB01",9,10,true,"David Smith",3};
+	// userSchedule.insert("ece 311",section1);
+	// section1 = {"EB02",13,14,false,"Priyanka Emayan",10};
+	// userSchedule.insert("ece 311",section1);
+	// section1 = {"EB03",9,10,true,"Mateo Ruiz",8};
+	// userSchedule.insert("ece 311",section1);
+
+	// section1 = {"B1",11,12,true,"Megan Nemeth",6};
+	// userSchedule.insert("ece 321",section1);
+	// section1 = {"B2",14,15,true,"Dustin Meyers",7};
+	// userSchedule.insert("ece 321",section1);
+
+	// section1 = {"EB1",13,14,false,"Anna Hayworth",4};
+	// userSchedule.insert("ece 325",section1);
+
+	// section1 = {"B1",14,15,false,"Muhammad Shareef",9};
+	// userSchedule.insert("stat 235",section1);
+	// section1 = {"B2",8,9,true,"Jennifer Fawcett",5};
+	// userSchedule.insert("stat 235",section1);
+
+	// section1 = {"EB01",8,9,true,"Miriam Barasha",8};
+	// userSchedule.insert("ch e 243",section1);
+	// section1 = {"EB02",11,12,true,"Lydia Johnstone",1};
+	// userSchedule.insert("ch e 243",section1);
+	// section1 = {"EB03",8,9,false,"Alan Campbell",8};
+	// userSchedule.insert("ch e 243",section1);
+
+	// section1 = {"A1",13,14,false,"Andy Dufresne",7};
+	// userSchedule.insert("soc 225",section1);
+	// section1 = {"ebo2",9,10,false,"pescke",7};
+	// userSchedule.insert("math",section1);
+	// userSchedule.insertRequired("science");
+	// userSchedule.insertRequired("sad");
+
+	// section1 = {"eb01", 13, 14, true, "mar",10};
+	// userSchedule.insert("science", section1);
+	// section1 = {"eb02", 9, 10, true, "saiyu",7};
+	// userSchedule.insert("science", section1);
+
+	// section1 = {"eb01", 10, 11, true, "hello",2};
+	// userSchedule.insert("sad", section1);
+	// section1 = {"eb02", 11, 14, true, "this",7};
+	// userSchedule.insert("sad", section1);

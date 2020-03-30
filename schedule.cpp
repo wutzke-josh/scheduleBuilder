@@ -8,7 +8,17 @@ void schedule::insert(string name, classInfo myClass){
 
 void schedule::display(){
 	for(auto x: finalSchedule){
-		cout << x.first << ' ' << x.second.section << ' ' << x.second.rating << ' ' << x.second.score << endl;
+		cout << x.first << ": " << endl;
+		cout << "Section " << x.second.section << " with " << x.second.professor;
+		cout << " (rating = " << x.second.rating << ")" << endl;
+		cout << "on ";
+		if(x.second.day = false){
+			cout << "Tuesdays and Thursdays ";
+		}else{
+			cout << "Mondays, Wednesdays, and Fridays ";
+		}
+		cout << "from " << x.second.start << ":00" << " to " << x.second.end << ":00" << endl;
+		cout << endl;
 	}
 }
 
