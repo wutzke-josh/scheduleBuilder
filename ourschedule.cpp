@@ -4,7 +4,7 @@
 #include "schedule.h"
 using namespace std;
 
-int readFile(char file_name[], schedule& userSchedule){
+void readFile(char file_name[], schedule& userSchedule){
 	ifstream reading;
 	string mystr; 
 	string mysub;
@@ -37,6 +37,7 @@ int readFile(char file_name[], schedule& userSchedule){
 				}else{
 					thisClass.day = false;
 				}
+				// cout << thisClass.section << " at " << thisClass.day << endl;
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				thisClass.professor = mysub.substr(0,cutoff);
@@ -50,7 +51,7 @@ int readFile(char file_name[], schedule& userSchedule){
 void welcomePrompt(schedule& userSchedule){
 	cout << "Welcome to schedule builder! Please select your preferences: " << endl;
 	cout << "Do you have a preference for morning or afternoon classes? " << endl;
-	cout << "Please select: morning, afternoon, n/a: ";
+	cout << "Please select a preference (morning, afternoon, n/a): ";
 	string selection;
 	bool answered = false;
 	bool prof_only = false;
@@ -71,7 +72,7 @@ void welcomePrompt(schedule& userSchedule){
 	}
 	answered = false;
 	if(!prof_only){
-		cout << "Would you like to combine your preference with a high professor rating?(y/n) ";
+		cout << "Would you like to combine your preference with a high professor rating? (y/n) ";
 		while(!answered){
 			cin >> selection;
 			if(selection == "y" || selection == "Y" ){
@@ -90,9 +91,9 @@ void welcomePrompt(schedule& userSchedule){
 
 int main(int argc, char *argv[]){
 	schedule userSchedule;
-	cout << "before" << endl;
+	// cout << "before" << endl;
 	readFile(argv[1],userSchedule);
-	cout << "after" << endl;
+	// cout << "after" << endl;
 
 	welcomePrompt(userSchedule);
 	bool itworked = userSchedule.makeSchedule();

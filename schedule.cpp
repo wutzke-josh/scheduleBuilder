@@ -12,7 +12,7 @@ void schedule::display(){
 		cout << "Section " << x.second.section << " with " << x.second.professor;
 		cout << " (rating = " << x.second.rating << ")" << endl;
 		cout << "on ";
-		if(x.second.day = false){
+		if(x.second.day == false){
 			cout << "Tuesdays and Thursdays ";
 		}else{
 			cout << "Mondays, Wednesdays, and Fridays ";
@@ -85,7 +85,7 @@ void schedule::computeScore() {
 	// factor so that you don't get schedules with
 	// five 10's and one 1
 	for( auto subject: myCourses) {
-		for (int i = 0; i < subject.second.size(); i++) {
+		for (unsigned int i = 0; i < subject.second.size(); i++) {
 			classInfo section = subject.second[i];
 			int score = 0;
 
@@ -116,15 +116,15 @@ bool schedule::makeSchedule() {
 	// keep track if any schedule works
 	bool somePass = false;
 
-	for (int offset = 0; offset < courseReq.size(); offset++) {
+	for (unsigned int offset = 0; offset < courseReq.size(); offset++) {
 		unordered_map<string, classInfo> currentSchedule;
 		int currentScore = 0;
 		bool thisPass = true;
-		for(int i = 0; i < courseReq.size(); i++) {
+		for(unsigned int i = 0; i < courseReq.size(); i++) {
 			string courseName = courseReq[(i + offset) % courseReq.size()];
 			vector<classInfo> x = myCourses[courseName];
 			bool conflict;
-			int j = 0;
+			unsigned int j = 0;
 			conflict = checkConflict(currentSchedule, x[j]);
 
 			while (conflict && (j < (x.size()-1))) {
