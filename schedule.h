@@ -10,8 +10,8 @@ using namespace std;
 
 struct classInfo {
 	string section;
-	int start;
-	int end;
+	double start;
+	double end;
 	bool day;
 	string professor;
 	int rating;

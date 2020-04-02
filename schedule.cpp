@@ -1,4 +1,5 @@
 #include "schedule.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -17,7 +18,13 @@ void schedule::display(){
 		}else{
 			cout << "Mondays, Wednesdays, and Fridays ";
 		}
-		cout << "from " << x.second.start << ":00" << " to " << x.second.end << ":00" << endl;
+		int startHour = x.second.start;
+		int startMin = (x.second.start-startHour)*60.0;
+
+		int endHour = x.second.end;
+		int endMin = (x.second.end-endHour)*60.0;
+		cout << "from " << startHour << ":" <<setw(2) << setfill('0') << right << startMin << " to " << endHour << ":";
+		cout <<setw(2) << setfill('0') << right << endMin << endl;
 		cout << endl;
 	}
 }

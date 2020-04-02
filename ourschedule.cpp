@@ -25,10 +25,10 @@ void readFile(char file_name[], schedule& userSchedule){
 				thisClass.section = mystr.substr(0,cutoff);
 				mysub = mystr.substr(cutoff+1);
 				cutoff = mysub.find(',');
-				thisClass.start = stoi(mysub.substr(0,cutoff));
+				thisClass.start = stod(mysub.substr(0,cutoff));
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
-				thisClass.end = stoi(mysub.substr(0,cutoff));
+				thisClass.end = stod(mysub.substr(0,cutoff));
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				whatDay = mysub.substr(0,cutoff);

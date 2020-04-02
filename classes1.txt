@@ -15,4 +15,4 @@ EB01,8,9,true,Miriam Barasha,8
 EB02,11,12,true,Lydia Johnstone,1
 EB03,11,12,false,Alan Campbell,8
 C SOC 225,1
-A1,12,13,false,Andy Dufresne,7
+A1,11.5,13,false,Andy Dufresne,7
