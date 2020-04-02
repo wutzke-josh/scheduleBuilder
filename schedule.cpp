@@ -78,7 +78,7 @@ void schedule::sortRating(){
 
 bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInfo section) {
 	for(auto x: schedule) {
-		if (x.second.day == section.day) {
+		if ((x.second.day & section.day) != 0) {
 			if (!((x.second.end <= section.start) || (section.end <= x.second.start))) {
 				return true;
 			}
