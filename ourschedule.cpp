@@ -91,16 +91,15 @@ void welcomePrompt(schedule& userSchedule){
 
 int main(int argc, char *argv[]){
 	schedule userSchedule;
-	// cout << "before" << endl;
+	// readReq(argv[1],userSchedule);
 	readFile(argv[1],userSchedule);
-	// cout << "after" << endl;
 
 	welcomePrompt(userSchedule);
 	bool itworked = userSchedule.makeSchedule();
 	if (itworked) {
 		userSchedule.display();
 	} else {
-		cout << "Sorry! A schedule cannot be made with this classes" << endl;
+		cout << "Sorry! A schedule cannot be made with these classes" << endl;
 	}
 
 	return 0;
