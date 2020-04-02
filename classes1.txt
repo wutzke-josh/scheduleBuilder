@@ -1,18 +1,20 @@
 C ECE 311,3
-EB01,8,9,true,David Smith,3
-EB02,13,14,false,Priyanka Emayan,10
-EB03,9,10,true,Mateo Ruiz,8
+EB01,8,9,0101010,David Smith,3
+EB02,13,14,0010100,Priyanka Emayan,10
+EB03,9,10,0101010,Mateo Ruiz,8
 C ECE 321,2
-B1,11,12,true,Megan Nemeth,6
-B2,14,15,true,Dustin Meyers,7
+B1,11,12,0101010,Megan Nemeth,6
+B2,14,15,0101010,Dustin Meyers,7
 C ECE 325,1
-EB1,13,14,false,Anna Hayworth,4
+EB1,13,14,0010100,Anna Hayworth,4
 C STAT 235,2
-B1,14,15,false,Muhammad Shareef,9
-B2,9,10,true,Jennifer Fawcett,5
+B1,14,15,0010100,Muhammad Shareef,9
+B2,9,10,0101010,Jennifer Fawcett,5
 C CH E 243,3
-EB01,8,9,true,Miriam Barasha,8
-EB02,11,12,true,Lydia Johnstone,1
-EB03,11,12,false,Alan Campbell,8
+EB01,8,9,0101010,Miriam Barasha,8
+EB02,11,12,0101010,Lydia Johnstone,1
+EB03,11,12,0010100,Alan Campbell,8
 C SOC 225,1
-A1,11.5,13,false,Andy Dufresne,7
+A1,11.5,13,0010100,Andy Dufresne,7
+C ECE 311 Lab,1
+EB02,10,11,0100000,John Smith,6

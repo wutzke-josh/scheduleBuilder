@@ -8,16 +8,18 @@ void schedule::insert(string name, classInfo myClass){
 }
 
 void schedule::display(){
+	vector<string> week = {"Sundays","Mondays","Tuesdays","Wednesdays","Thursdays","Fridays","Saturdays"};
 	for(auto x: finalSchedule){
 		cout << x.first << ": " << endl;
 		cout << "Section " << x.second.section << " with " << x.second.professor;
 		cout << " (rating = " << x.second.rating << ")" << endl;
 		cout << "on ";
-		if(x.second.day == false){
-			cout << "Tuesdays and Thursdays ";
-		}else{
-			cout << "Mondays, Wednesdays, and Fridays ";
+		for(int i=6;i>=0;i--){
+			if((x.second.day >> i) & 1){
+				cout << week[6-i] << " ";
+			}
 		}
+		
 		int startHour = x.second.start;
 		int startMin = (x.second.start-startHour)*60.0;
 

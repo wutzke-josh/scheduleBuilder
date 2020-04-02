@@ -4,6 +4,17 @@
 #include "schedule.h"
 using namespace std;
 
+int8_t strToInt(string days){
+	int8_t myDay = 0;
+	for(int i=0;i<7;i++){
+		myDay  = myDay << 1;
+		if(days[i]=='1'){
+			myDay ++;
+		}
+	}
+	return myDay;
+}
+
 void readFile(char file_name[], schedule& userSchedule){
 	ifstream reading;
 	string mystr; 
@@ -32,12 +43,7 @@ void readFile(char file_name[], schedule& userSchedule){
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				whatDay = mysub.substr(0,cutoff);
-				if(whatDay == "true"){
-					thisClass.day = true;
-				}else{
-					thisClass.day = false;
-				}
-				// cout << thisClass.section << " at " << thisClass.day << endl;
+				thisClass.day = strToInt(whatDay);
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				thisClass.professor = mysub.substr(0,cutoff);
