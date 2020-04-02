@@ -36,7 +36,7 @@ class schedule {
 public:
   	void insertRequired(string required);
   	void insert(string name, classInfo myClass);
-    // unordered_set<course> buildSchedule();
+    bool inReq(string className);
 	void sortRating();
 	void display();
 	bool makeSchedule();

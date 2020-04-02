@@ -6,6 +6,15 @@ using namespace std;
 void schedule::insert(string name, classInfo myClass){
 	myCourses[name].push_back(myClass);
 }
+bool schedule::inReq(string className){
+	bool found = false;
+	for(auto x: courseReq){
+		if(x==className){
+			found = true;
+		}
+	}
+	return found;
+}
 
 void schedule::display(){
 	vector<string> week = {"Sundays","Mondays","Tuesdays","Wednesdays","Thursdays","Fridays","Saturdays"};
