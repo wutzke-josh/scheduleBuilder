@@ -114,9 +114,9 @@ void schedule::computeScore() {
 				score += section.rating;
 			}
 			if (prefer.morning) {
-				score += 24 - section.start;
+				score += (24 - section.start) / 4;
 			} else if (prefer.afternoon) {
-				score += section.start;
+				score += section.start / 4;
 			}
 
 			myCourses[subject.first][i].score = score;
@@ -140,20 +140,22 @@ bool schedule::makeSchedule() {
 		bool thisPass = true;
 		for(unsigned int i = 0; i < courseReq.size(); i++) {
 			string courseName = courseReq[(i + offset) % courseReq.size()];
-			vector<classInfo> x = myCourses[courseName];
-			bool conflict;
-			unsigned int j = 0;
-			conflict = checkConflict(currentSchedule, x[j]);
+			vector<classInfo> courseSections = myCourses[courseName];
+			bool conflict = true;
 
-			while (conflict && (j < (x.size()-1))) {
-				j++;
-				conflict = checkConflict(currentSchedule, x[j]);
+
+			auto x = courseSections.begin();
+			while (conflict && (x != courseSections.end())) {
+				conflict = checkConflict(currentSchedule, *x);
+				if (conflict) {
+					x++;
+				}
 			}
 
 			if (!conflict) {
-				currentSchedule[courseName] = x[j];
+				currentSchedule[courseName] = *x;
 
-				currentScore += x[j].score;
+				currentScore += x->score;
 			} else {
 				thisPass = false;
 				break;
