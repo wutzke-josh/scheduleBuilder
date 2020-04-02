@@ -12,7 +12,7 @@ struct classInfo {
 	string section;
 	double start;
 	double end;
-	bool day;
+	int8_t day;
 	string professor;
 	int rating;
 	int score = 0;
