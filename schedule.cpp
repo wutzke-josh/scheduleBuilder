@@ -1,5 +1,6 @@
 #include "schedule.h"
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -129,17 +130,24 @@ bool schedule::makeSchedule() {
 	computeScore();
 	sortRating();
 
+	int length = courseReq.size();
+
+	int permutation[length];
+	for (int i = 0; i < length; i++) {
+		permutation[i] = i;
+	}
+
 	int bestScore = 0;
 
 	// keep track if any schedule works
 	bool somePass = false;
 
-	for (unsigned int offset = 0; offset < courseReq.size(); offset++) {
+	do {
 		unordered_map<string, classInfo> currentSchedule;
 		int currentScore = 0;
 		bool thisPass = true;
-		for(unsigned int i = 0; i < courseReq.size(); i++) {
-			string courseName = courseReq[(i + offset) % courseReq.size()];
+		for(unsigned int i = 0; i < length; i++) {
+			string courseName = courseReq[permutation[i]];
 			vector<classInfo> courseSections = myCourses[courseName];
 			bool conflict = true;
 
@@ -170,7 +178,7 @@ bool schedule::makeSchedule() {
 			finalSchedule = currentSchedule;
 			bestScore = currentScore;
 		}
-	}
+	} while (next_permutation(permutation, permutation+length));
 	// 'should' return true if it worked
 	return somePass;
 }
