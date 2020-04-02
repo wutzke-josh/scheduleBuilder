@@ -29,11 +29,14 @@ void readFile(char file_name[], schedule& userSchedule){
 	{
 		while(getline(reading,mystr)){
 			if(mystr[0]=='C'){
+				//cout << "searching " << endl;
 				cutoff = mystr.find(',');
 				className = mystr.substr(2,cutoff-2);
 				if(userSchedule.inReq(className)){
 					getClass = true;
+					//cout << "found it" << endl;
 				}else{
+					//cout << "not this one" << endl;
 					getClass = false;
 				}
 				
@@ -53,6 +56,7 @@ void readFile(char file_name[], schedule& userSchedule){
 				mysub = mysub.substr(cutoff+1);
 				cutoff = mysub.find(',');
 				thisClass.professor = mysub.substr(0,cutoff);
+				//cout << "prof " << thisClass.professor << endl;
 				mysub = mysub.substr(cutoff+1);
 				thisClass.rating = stoi(mysub);
 				userSchedule.insert(className,thisClass);
@@ -64,11 +68,15 @@ void welcomePrompt(schedule& userSchedule){
 	cout << "Welcome to schedule builder!" << endl;
 	cout << "How many classes (including labs and seminars) will you be taking this semester? ";
 	int numberOfClasses;
-	char className[256];
+	string className;
 	cin >> numberOfClasses;
 	cout << "Please enter each class followed by the enter key " << endl;
+
 	for(int i=0;i<numberOfClasses;i++){
-		cin.getline(className,256);
+		//scanf("%[\n]s",className);
+		cin >> ws;
+		getline(cin,className);
+		
 		userSchedule.insertRequired(className);
 	}
 	cout << "Do you have a preference for morning or afternoon classes? " << endl;
