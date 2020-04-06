@@ -10,11 +10,22 @@
 using namespace std;
 
 void schedule::insert(string name, classInfo myClass){
+	/*
+	Inserts a class into the myCourses vector
+	Inputs: Name of class (string), classInfo myClass
+	Outputs: None
+	*/
 	myCourses[name].push_back(myClass);
 }
 bool schedule::inReq(string className){
+	/*
+	Check if a class is in the required classes
+	Inputs: className (string)
+	Outputs: bool (if it is in there)
+	*/
 	bool found = false;
 	for(auto x: courseReq){
+		// if the class is in the course requirements, return true
 		if(x==className){
 			found = true;
 		}
