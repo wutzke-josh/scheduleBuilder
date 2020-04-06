@@ -143,13 +143,25 @@ void schedule::sortRating(){
 }
 
 bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInfo section) {
+	/* 
+	Checks to see if there is a scheduling conflict between two sections
+	Inputs: an unordered map representing the current schedule, and an object of type class Info
+	Outputs: a boolean value (whether there is conflict or not)
+	*/
+	// for every course in the schedule
 	for(auto x: schedule) {
+		// check to see if the current course and the given parameter 'section' are on the same days
+		// this will return true even if one course is a lab on mondays while another is a course
+		// on mondays, wednesdays, and fridays
 		if ((x.second.day & section.day) != 0) {
+			// if the end of one course is after or equal to the start of the other
+			// or vice versa, then there is a scheduling conflict
 			if (!((x.second.end <= section.start) || (section.end <= x.second.start))) {
 				return true;
 			}
 		}
 	}
+	//otherwise, there were no conflicts
 	return false;
 }
 

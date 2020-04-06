@@ -158,21 +158,29 @@ int main(int argc, char *argv[]){
 	Outputs: Int 0
 	*/ 
 	schedule userSchedule;
-	// displays the welcome prompt to the user
-	welcomePrompt(userSchedule);
-	// reads the file that the courses are to be chosen from
-	readFile(argv[1],userSchedule);
-	cout << endl;
-	cout << "Loading..." << endl;
-	bool itworked = userSchedule.makeSchedule();
-	// if the schedule build was successful, the optimal schedule will
-	// be displayed. If a schedule cannot be made (ie required class not in text file)
-	// an error message will be displayed. 
-	cout << endl;
-	if (itworked) {
-		userSchedule.display();
+
+	// check to see if the correct number of command arguments was given
+	if (argc<2) {
+		cout << "Please enter your available course section data file" << endl;
+	} else if (argc>2) {
+		cout << "Too many arguments. Please try again" << endl;
 	} else {
-		cout << "Sorry! A schedule cannot be made with these classes." << endl;
+		// displays the welcome prompt to the user
+		welcomePrompt(userSchedule);
+		// reads the file that the courses are to be chosen from
+		readFile(argv[1],userSchedule);
+		cout << endl;
+		cout << "Loading..." << endl;
+		bool itworked = userSchedule.makeSchedule();
+		// if the schedule build was successful, the optimal schedule will
+		// be displayed. If a schedule cannot be made (ie required class not in text file)
+		// an error message will be displayed. 
+		cout << endl;
+		if (itworked) {
+			userSchedule.display();
+		} else {
+			cout << "Sorry! A schedule cannot be made with these classes." << endl;
+		}
 	}
 
 	return 0;
