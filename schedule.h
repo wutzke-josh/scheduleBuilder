@@ -42,9 +42,9 @@ public:
   	void insertRequired(string required);
   	void insert(string name, classInfo myClass);
     bool inReq(string className);
-	void sortRating();
 	void display();
 	bool makeSchedule();
+	bool makeScheduleFast();
 	void preferMorn(bool pref = true);
 	void preferAft(bool pref = true);
 	void preferProf(bool pref = true);
@@ -59,6 +59,7 @@ private:
 	unordered_map<string,vector<classInfo>> myCourses;
 	unordered_map<string, classInfo> finalSchedule;
 
+	void sortRating();
 	void computeScore();
 	bool checkConflict(unordered_map<string, classInfo> schedule, classInfo section);
 	void swap(classInfo& c1,classInfo& c2);

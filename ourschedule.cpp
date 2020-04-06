@@ -86,11 +86,11 @@ void readFile(char file_name[], schedule& userSchedule){
 	}
 	reading.close();
 }
-void welcomePrompt(schedule& userSchedule){
+bool welcomePrompt(schedule& userSchedule){
 	/*
 	Takes in user input for the schedule
 	Inputs: Schedule to build
-	Outputs: None
+	Outputs: Bool fast - if loop limit is active or not
 	*/
 	cout << "Welcome to schedule builder!" << endl;
 	cout << "How many classes (including labs and seminars) will you be taking this semester? ";
@@ -148,7 +148,18 @@ void welcomePrompt(schedule& userSchedule){
 			}
 		}
 	}
-
+	cout << "Would you like to run fast or in depth? (fast/slow): ";
+	answered = false;
+	while (!answered) {
+		cin >> selection;
+		if (selection == "fast") {
+			return true;
+		} else if (selection == "slow") {
+			return false;
+		} else {
+			cout << "Please select a valid preference (fast/slow): ";
+		}
+	}
 }
 
 int main(int argc, char *argv[]){
@@ -166,12 +177,17 @@ int main(int argc, char *argv[]){
 		cout << "Too many arguments. Please try again" << endl;
 	} else {
 		// displays the welcome prompt to the user
-		welcomePrompt(userSchedule);
+		bool fast = welcomePrompt(userSchedule);
 		// reads the file that the courses are to be chosen from
 		readFile(argv[1],userSchedule);
 		cout << endl;
 		cout << "Loading..." << endl;
-		bool itworked = userSchedule.makeSchedule();
+		bool itworked;
+		if (fast) {
+			itworked = userSchedule.makeScheduleFast();
+		} else {
+			itworked = userSchedule.makeSchedule();
+		}
 		// if the schedule build was successful, the optimal schedule will
 		// be displayed. If a schedule cannot be made (ie required class not in text file)
 		// an error message will be displayed. 

@@ -40,7 +40,7 @@ void schedule::display(){
 	Outputs: None
 	*/
 	vector<string> week = {"Sundays","Mondays","Tuesdays","Wednesdays","Thursdays","Fridays","Saturdays"};
-	// iterates through all courses in the final schedule
+	// iterates through all courses in the final scheduleinRe
 	for(auto x: finalSchedule){
 		// displays course name
 		cout << x.first << ": " << endl;
@@ -244,10 +244,62 @@ bool schedule::makeSchedule() {
 			finalSchedule = currentSchedule;
 			bestScore = currentScore;
 		}
+
 	} while (next_permutation(permutation, permutation+length));
 	// 'should' return true if it worked
 	return somePass;
 }
+
+bool schedule::makeScheduleFast() {
+	computeScore();
+	sortRating();
+
+	int bestScore = 0;
+
+	// keep track if any schedule works
+	bool somePass = false;
+
+	for (unsigned int offset = 0; offset < courseReq.size(); offset++) {
+		unordered_map<string, classInfo> currentSchedule;
+		int currentScore = 0;
+		bool thisPass = true;
+		for(unsigned int i = 0; i < courseReq.size(); i++) {
+			string courseName = courseReq[(i + offset) % courseReq.size()];
+			vector<classInfo> courseSections = myCourses[courseName];
+			bool conflict = true;
+
+
+			auto x = courseSections.begin();
+			while (conflict && (x != courseSections.end())) {
+				conflict = checkConflict(currentSchedule, *x);
+				if (conflict) {
+					x++;
+				}
+			}
+
+			if (!conflict) {
+				currentSchedule[courseName] = *x;
+
+				currentScore += x->score;
+			} else {
+				thisPass = false;
+				break;
+			}
+		}
+
+		// if this passed, then some passed
+		if (thisPass) {
+			somePass = true;
+		}
+		if ((currentScore > bestScore) && thisPass) {
+			finalSchedule = currentSchedule;
+			bestScore = currentScore;
+		}
+	}
+	// 'should' return true if it worked
+	return somePass;
+}
+
 
 void schedule::insertRequired(string required) {
 	/*
