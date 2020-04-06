@@ -76,6 +76,8 @@ void welcomePrompt(schedule& userSchedule){
 		//scanf("%[\n]s",className);
 		cin >> ws;
 		getline(cin,className);
+
+		// cout << "Class: " << className << endl;
 		
 		userSchedule.insertRequired(className);
 	}
@@ -120,11 +122,13 @@ void welcomePrompt(schedule& userSchedule){
 
 int main(int argc, char *argv[]){
 	schedule userSchedule;
-	// readReq(argv[1],userSchedule);
 
 	welcomePrompt(userSchedule);
 	readFile(argv[1],userSchedule);
+	cout << endl;
+	cout << "Loading..." << endl;
 	bool itworked = userSchedule.makeSchedule();
+	cout << endl;
 	if (itworked) {
 		userSchedule.display();
 	} else {
@@ -133,56 +137,3 @@ int main(int argc, char *argv[]){
 
 	return 0;
 }
-
-	// schedule userSchedule;
-	// classInfo section1;
-	// userSchedule.insertRequired("soc 225");
-	// userSchedule.insertRequired("ch e 243");
-	// userSchedule.insertRequired("stat 235");
-	// userSchedule.insertRequired("ece 325");
-	// userSchedule.insertRequired("ece 321");
-	// userSchedule.insertRequired("ece 311");
-
-	// section1 = {"EB01",9,10,true,"David Smith",3};
-	// userSchedule.insert("ece 311",section1);
-	// section1 = {"EB02",13,14,false,"Priyanka Emayan",10};
-	// userSchedule.insert("ece 311",section1);
-	// section1 = {"EB03",9,10,true,"Mateo Ruiz",8};
-	// userSchedule.insert("ece 311",section1);
-
-	// section1 = {"B1",11,12,true,"Megan Nemeth",6};
-	// userSchedule.insert("ece 321",section1);
-	// section1 = {"B2",14,15,true,"Dustin Meyers",7};
-	// userSchedule.insert("ece 321",section1);
-
-	// section1 = {"EB1",13,14,false,"Anna Hayworth",4};
-	// userSchedule.insert("ece 325",section1);
-
-	// section1 = {"B1",14,15,false,"Muhammad Shareef",9};
-	// userSchedule.insert("stat 235",section1);
-	// section1 = {"B2",8,9,true,"Jennifer Fawcett",5};
-	// userSchedule.insert("stat 235",section1);
-
-	// section1 = {"EB01",8,9,true,"Miriam Barasha",8};
-	// userSchedule.insert("ch e 243",section1);
-	// section1 = {"EB02",11,12,true,"Lydia Johnstone",1};
-	// userSchedule.insert("ch e 243",section1);
-	// section1 = {"EB03",8,9,false,"Alan Campbell",8};
-	// userSchedule.insert("ch e 243",section1);
-
-	// section1 = {"A1",13,14,false,"Andy Dufresne",7};
-	// userSchedule.insert("soc 225",section1);
-	// section1 = {"ebo2",9,10,false,"pescke",7};
-	// userSchedule.insert("math",section1);
-	// userSchedule.insertRequired("science");
-	// userSchedule.insertRequired("sad");
-
-	// section1 = {"eb01", 13, 14, true, "mar",10};
-	// userSchedule.insert("science", section1);
-	// section1 = {"eb02", 9, 10, true, "saiyu",7};
-	// userSchedule.insert("science", section1);
-
-	// section1 = {"eb01", 10, 11, true, "hello",2};
-	// userSchedule.insert("sad", section1);
-	// section1 = {"eb02", 11, 14, true, "this",7};
-	// userSchedule.insert("sad", section1);
