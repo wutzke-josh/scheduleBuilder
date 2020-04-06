@@ -1,3 +1,8 @@
+// ============================
+// Name: Josh Wutzke, Jordan Rusk and Sarah Hildt
+// CMPUT 275, Winter 2020
+// Final Project
+// ============================
 #ifndef _SCHEDULE_H_
 #define _SCHEDULE_H_
 #include <iostream>
