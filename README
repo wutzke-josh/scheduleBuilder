@@ -1,0 +1,37 @@
+# ============================
+# Name: Josh Wutzke, Sarah Hildt, and Jordan Rusk
+# CMPUT 275, Winter 2020
+#
+# Final Project
+# ============================
+
+Included Files:
+	README	
+	ourschedule.cpp
+	Makefile
+	schedule.cpp
+	schedule.h
+	sectionList.txt
+	classList.txt
+
+Running Instructions:
+	
+	Have all files in the same directory. Type make to make the ourschedule executable. Proceed to type ./ourschedule sectionList.txt to run the code. Enter your user preferences as indicated on the terminal. Be precise, as capitalization, spacing, and punctuation matter. To see the list of valid classes, open classList.txt.
+
+Work Breakdown: 
+
+	COLLABORATED VIA GOOGLE HANGOUTS FOR ALMOST THE ENTIRE PROJECT
+
+	Josh: Contributed to design of algorithms for makeSchedule functions, as well as user preferences
+	Sarah: Contributed to design of file parser and user interface
+	Jordan: Contributed to design of test files and checkConflict function
+
+Notes and Assumptions:
+	The slow schedule maker iterates through all permutations before determining a schedule, where the best case for time is O(n!),and the worst is O(n!*m) where n is the number of classes and m is the largest number of sections in any of the classes. It should generally be used for inputs less than 9, as the difference in time between it and the fast schedule is very small. However, it should generally not be used for inputs over 10 as the time becomes very long. 
+
+	The fast function does not necessarily produce the best schedule, but it will produce a reasonably good schedule in dramatically less time. The upper bound time is O(n*mlogm) where n is the number of classes and m is the largest number of sections in any of the classes. Therefore, it should be used for larger inputs.
+	
+	
+	
+	
+	
