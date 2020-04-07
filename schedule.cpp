@@ -17,6 +17,8 @@ void schedule::insert(string name, classInfo myClass){
 	*/
 	myCourses[name].push_back(myClass);
 }
+
+
 bool schedule::inReq(string className){
 	/*
 	Check if a class is in the required classes
@@ -32,6 +34,7 @@ bool schedule::inReq(string className){
 	}
 	return found;
 }
+
 
 void schedule::display(){
 	/*
@@ -69,6 +72,7 @@ void schedule::display(){
 	}
 }
 
+
 void schedule::swap(classInfo& c1, classInfo& c2) {
 	/*
 	Swaps two classInfo elements
@@ -79,6 +83,8 @@ void schedule::swap(classInfo& c1, classInfo& c2) {
 	c1 = c2;
 	c2 = tmp;
 } 
+
+
 int schedule::pivot(vector<classInfo>& thisCourse, int n, int pi,int start){
 	/*
 	Pivot function creates new pivot for use in quick sort. It was adapted
@@ -127,6 +133,8 @@ void schedule::quickSort(vector<classInfo>& thisCourse, int start, int n){
 		quickSort(thisCourse,new_pi+1,n-(new_pi-start)-1);
 	}
 }
+
+
 void schedule::sortRating(){
 	/*
 	Sorts all of the sections by each class rating
@@ -141,6 +149,7 @@ void schedule::sortRating(){
 		x++;
 	}
 }
+
 
 bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInfo section) {
 	/* 
@@ -165,10 +174,13 @@ bool schedule::checkConflict(unordered_map<string, classInfo> schedule, classInf
 	return false;
 }
 
+
 void schedule::computeScore() {
 	// if the rating is 5 or below, subtract a penalty
 	// factor so that you don't get schedules with
-	// five 10's and one 1
+	// five 10's and one 1. Also add a factor for time
+	// of day. Which are added depends on user selections
+	// stored in prefer struct
 	for( auto subject: myCourses) {
 		for (unsigned int i = 0; i < subject.second.size(); i++) {
 			classInfo section = subject.second[i];
@@ -193,32 +205,55 @@ void schedule::computeScore() {
 
 
 bool schedule::makeSchedule() {
+	// When this function is called, it takes the current states of the object (options and courses)
+	// to find the optimal schedule. This function takes every possible permutation of finding a schedule
+	// and can take a long time with more than 8 required classes.
+	// Arguments: None
+	// Returns: bool somePass - returns whether any schedules are made, false if none possible
+
+	// to make the schedule, we first need to compute the score then with
+	// the computed score, sort all of the courses by the rating
 	computeScore();
 	sortRating();
 
+	// at this point, the myCourses map has a key that contains the name of the class
+	// the the value is a vector that contains all of the sections for that class, sorted
+	// from the highest scored section to the lowest.
 	int length = courseReq.size();
 
+
+	// make a list that will have every permutation iterated through
+	// to index the courseReq vector, this is because the std::next_permutation
+	// doesn't work with our vector.
 	int permutation[length];
 	for (int i = 0; i < length; i++) {
 		permutation[i] = i;
 	}
 
-	int bestScore = 0;
+	// min value of int on vm in case best score is negative
+	int bestScore = -2147483648l;
 
 	// keep track if any schedule works
 	bool somePass = false;
 
 	do {
+		// Make a possible schedule and assume one can be made in this order
 		unordered_map<string, classInfo> currentSchedule;
 		int currentScore = 0;
 		bool thisPass = true;
+
+		// For each class, go through the list of sections, checking to see if the
+		// highest scored section has any conflicts with existing sections
 		for(unsigned int i = 0; i < length; i++) {
+			// find course name using permutation vector
 			string courseName = courseReq[permutation[i]];
+			// use courseName to get a vector of sections for that course
 			vector<classInfo> courseSections = myCourses[courseName];
-			bool conflict = true;
 
-
+			// until a course without conflict is found or the
+			// all courses are checked, check the next course
 			auto x = courseSections.begin();
+			bool conflict = true;
 			while (conflict && (x != courseSections.end())) {
 				conflict = checkConflict(currentSchedule, *x);
 				if (conflict) {
@@ -226,49 +261,70 @@ bool schedule::makeSchedule() {
 				}
 			}
 
+			// if no conflict, add to current schedule
 			if (!conflict) {
 				currentSchedule[courseName] = *x;
 
 				currentScore += x->score;
 			} else {
+				// otherwise, making a schedule with this permutation is impossible
 				thisPass = false;
 				break;
 			}
 		}
 
-		// if this passed, then some passed
+		// if this passed, then some passed (there is at least possible schedule)
 		if (thisPass) {
 			somePass = true;
 		}
+		// if this score is the best and the schedule was made, update best schedule
 		if ((currentScore > bestScore) && thisPass) {
 			finalSchedule = currentSchedule;
 			bestScore = currentScore;
 		}
-
+	// every loop, make a new permutation of the permutation list
 	} while (next_permutation(permutation, permutation+length));
-	// 'should' return true if it worked
+	// returns if any schedules were made
 	return somePass;
 }
 
+
 bool schedule::makeScheduleFast() {
+	// When this function is called, it takes the current states of the object (options and courses)
+	// to find a good schedule. This function takes a small set of permutations of finding a schedule
+	// and runs very fast but, especially in inputs larger than 10, may not find a schedule even if possible.
+	// Arguments: None
+	// Returns: bool somePass - returns whether any schedules are made, false if none possible
+
+	// to make the schedule, we first need to compute the score then with
+	// the computed score, sort all of the courses by the rating
 	computeScore();
 	sortRating();
 
-	int bestScore = 0;
 
-	// keep track if any schedule works
+	// keep track if any schedule works and best score
+	// -2147483648l is the min value of an int on the vm
+	int bestScore = -2147483648l;
 	bool somePass = false;
 
+	// for each starting point(offset), greedily find best schedule
 	for (unsigned int offset = 0; offset < courseReq.size(); offset++) {
+		// declare current schedule, its score, and if it can be made
 		unordered_map<string, classInfo> currentSchedule;
 		int currentScore = 0;
 		bool thisPass = true;
+
+		// for each class, with the offset, find the best section that doesn't conflict
+		// with previously added classes
 		for(unsigned int i = 0; i < courseReq.size(); i++) {
+			// get name of course and list of all sections for it
 			string courseName = courseReq[(i + offset) % courseReq.size()];
 			vector<classInfo> courseSections = myCourses[courseName];
 			bool conflict = true;
 
-
+			// starting with the highest rated section,
+			// until a section without conflict is found or
+			// the end of the vector is reached, check next section
 			auto x = courseSections.begin();
 			while (conflict && (x != courseSections.end())) {
 				conflict = checkConflict(currentSchedule, *x);
@@ -277,26 +333,30 @@ bool schedule::makeScheduleFast() {
 				}
 			}
 
+			// if class found, add to schedule
 			if (!conflict) {
 				currentSchedule[courseName] = *x;
 
 				currentScore += x->score;
+			// otherwise break as this permutation won't
+			// produce a complete schedule
 			} else {
 				thisPass = false;
 				break;
 			}
 		}
 
-		// if this passed, then some passed
+		// if this passed, then some passed(a schedule was found)
 		if (thisPass) {
 			somePass = true;
 		}
+		// if a schedule was made, update best if better
 		if ((currentScore > bestScore) && thisPass) {
 			finalSchedule = currentSchedule;
 			bestScore = currentScore;
 		}
 	}
-	// 'should' return true if it worked
+	// returns if any schedules were made
 	return somePass;
 }
 
@@ -309,6 +369,7 @@ void schedule::insertRequired(string required) {
 	*/
 	courseReq.push_back(required);
 }
+
 
 void schedule::preferMorn(bool pref) {
 	/*
@@ -324,6 +385,7 @@ void schedule::preferMorn(bool pref) {
 	checkPrefs();
 }
 
+
 void schedule::preferAft(bool pref) {
 	/*
 	Sets the afternoon preference
@@ -337,6 +399,8 @@ void schedule::preferAft(bool pref) {
 	}
 	checkPrefs();
 }
+
+
 void schedule::preferProf(bool pref) {
 	/*
 	Sets the professor preference
@@ -346,6 +410,8 @@ void schedule::preferProf(bool pref) {
 	prefer.prof = pref;
 	checkPrefs();
 }
+
+
 void schedule::checkPrefs() {
 	// if the user has not selected their preferences, the default is best professor
 	if(!(prefer.prof || prefer.morning || prefer.afternoon)) {

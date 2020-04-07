@@ -48,17 +48,16 @@ public:
 	void preferMorn(bool pref = true);
 	void preferAft(bool pref = true);
 	void preferProf(bool pref = true);
+
 private:
 	vector<string> courseReq;
 	vector<string> addedClasses;
-
 	classPreferences prefer;
-
-	void checkPrefs();
-
 	unordered_map<string,vector<classInfo>> myCourses;
 	unordered_map<string, classInfo> finalSchedule;
 
+
+	void checkPrefs();
 	void sortRating();
 	void computeScore();
 	bool checkConflict(unordered_map<string, classInfo> schedule, classInfo section);
