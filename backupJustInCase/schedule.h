@@ -1,3 +1,8 @@
+// ============================
+// Name: Josh Wutzke, Jordan Rusk and Sarah Hildt
+// CMPUT 275, Winter 2020
+// Final Project
+// ============================
 #ifndef _SCHEDULE_H_
 #define _SCHEDULE_H_
 #include <iostream>
@@ -10,14 +15,12 @@ using namespace std;
 
 struct classInfo {
 	string section;
-	int start;
-	int end;
-	bool day;
+	double start;
+	double end;
+	int8_t day;
 	string professor;
 	int rating;
-	bool operator> (const classInfo& other){
-		return rating > other.rating;
-	}
+	int score = 0;
 };	
 
 struct classPreferences {
@@ -38,20 +41,25 @@ class schedule {
 public:
   	void insertRequired(string required);
   	void insert(string name, classInfo myClass);
-    // unordered_set<course> buildSchedule();
-	void sortRating();
+    bool inReq(string className);
 	void display();
 	bool makeSchedule();
+	bool makeScheduleFast();
+	void preferMorn(bool pref = true);
+	void preferAft(bool pref = true);
+	void preferProf(bool pref = true);
+
 private:
 	vector<string> courseReq;
 	vector<string> addedClasses;
-
-
-
+	classPreferences prefer;
 	unordered_map<string,vector<classInfo>> myCourses;
 	unordered_map<string, classInfo> finalSchedule;
 
-	int computeScore(const classInfo& section);
+
+	void checkPrefs();
+	void sortRating();
+	void computeScore();
 	bool checkConflict(unordered_map<string, classInfo> schedule, classInfo section);
 	void swap(classInfo& c1,classInfo& c2);
 	void quickSort(vector<classInfo>& thisCourse, int start, int n);

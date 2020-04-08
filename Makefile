@@ -1,23 +1,25 @@
 CC=g++
 LFLAGS=
 CFLAGS=-c -Wall
-OBJS=ourschedule.o schedule.o
+OBJS=objects
 PROGS=ourschedule 
 
 all: $(PROGS)
 
-ourschedule: ourschedule.o schedule.o
-	$(CC) schedule.o ourschedule.o -o ourschedule $(LFLAGS)
+ourschedule: objects/ourschedule.o objects/schedule.o
+	$(CC) objects/schedule.o objects/ourschedule.o -o ourschedule $(LFLAGS)
 
-ourschedule.o: ourschedule.cpp 
-	$(CC) ourschedule.cpp -o ourschedule.o $(CFLAGS)
+objects/ourschedule.o: source/ourschedule.cpp 
+	mkdir -p $(@D)
+	$(CC) source/ourschedule.cpp -o objects/ourschedule.o $(CFLAGS)
 
 
-schedule.o: schedule.cpp 
-	$(CC) schedule.cpp -o schedule.o $(CFLAGS)
+objects/schedule.o: source/schedule.cpp 
+	mkdir -p $(@D)
+	$(CC) source/schedule.cpp -o objects/schedule.o $(CFLAGS)
 
 clean:
-	@rm -f $(PROGS) $(OBJS)
+	@rm -rf $(PROGS) $(OBJS)
 
 run: ourschedule
 	./ourschedule
