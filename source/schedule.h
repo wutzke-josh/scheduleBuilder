@@ -29,13 +29,6 @@ struct classPreferences {
 	bool prof = true;
 };
 
-// struct course {
-// 	string name;
-// 	vector<classInfo> sections;
-// 	bool operator== (const course& other){
-// 		return name==other->name;
-// 	}
-// }
 
 class schedule {
 public:
