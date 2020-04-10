@@ -1,0 +1,44 @@
+C ECE 302,6
+EA1,8,9,0101010,Xinyu Li,7
+EA2,12,13,0101010,Jack Haines,9
+EA3,10,11,0101010,Matthew Klemmer,5
+B1,8,9,0010100,Candace Heath,3
+B2,8,9,0010100,Maya Bear,8
+EB01,12,13,0101010,Stanislav Kaschak,6
+C ECE 311,8
+EB01,14,15,0010100,Bao Guan,9
+EB02,11,12,0010100,Petra Moldovan,6
+A1,10,11,0101010,Anh Nguyen,7
+A2,13,14,0101010,Destiny Lapierre,4
+A3,9,10,0101010,Milo Starblanket,5
+B1,9,10,0010100,Andrew Berhow,8
+B2,13,14,0010100,Nina Kerrigan,7
+EA1,11,12,0101010,Debesh Biswas,3
+C ECE 325,6
+B1,10,11,0010100,Shawn O'Neal,5
+EB01,11,12,0101010,Ariel Mizrahi,8
+EB02,14,15,0101010,Gary Chang,9
+EB03,13,14,0101010,Joseph Amar,3
+A1,11,12,0010100,Ainez Haider,7
+A2,12,13,0101010,Noreen Johnstone,4
+C MEC E 250,6
+A1,15,16,0101010,Tasnia Mohammadi,7
+B1,11,12,0101010,James Liu,5
+B2,10,11,0101010,Catherine Karenina,9
+B3,14,15,0101010,Jingyang Chu,1
+EB01,12,13,0010100,Renee Leibwitz,10
+EB02,9,10,0010100,Sihan Chong,8
+C ANTHR 150,6
+A1,11,13,0010100,Kennedy Diakuw,7
+A2,8,10,0010100,Hiro Iwamoto,8
+A3,9,10,0101010,Leslie Tuomi,2
+B1,8,9,0101010,Leo Song,6
+B2,12,13,0101010,Rodala Nazir,4
+B3,13,14,0101010,Gabriel Linsangan,7
+C PHIL 366,6
+A1,10,12,0010100,Alifa Aranya,6
+A2,15,16,0101010,Kevin Oad,6
+A3,10,11,0101010,Moheb Shafeeq,4
+B1,12,14,0010100,Rachel Kung,9
+B2,14,16,0010100,Denise Harvey,7
+B3,8,10,0010100,Pelumi Denga,7

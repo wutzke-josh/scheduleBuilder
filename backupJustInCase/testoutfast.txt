@@ -1,7 +1,0 @@
-Welcome to schedule builder!
-How many classes (including labs and seminars) will you be taking this semester? Please enter each class followed by the enter key 
-Do you have a preference for morning or afternoon classes? 
-Please select a preference (morning, afternoon, n/a): Would you like to run fast or in depth? (fast/slow): 
-Loading...
-
-Sorry! A schedule cannot be made with these classes.

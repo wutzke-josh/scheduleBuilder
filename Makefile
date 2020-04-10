@@ -4,8 +4,6 @@ CFLAGS=-c -Wall
 OBJS=objects
 PROGS=ourschedule 
 
-all: $(PROGS)
-
 ourschedule: objects/ourschedule.o objects/schedule.o
 	$(CC) objects/schedule.o objects/ourschedule.o -o ourschedule $(LFLAGS)
 
@@ -20,6 +18,3 @@ objects/schedule.o: source/schedule.cpp
 
 clean:
 	@rm -rf $(PROGS) $(OBJS)
-
-run: ourschedule
-	./ourschedule

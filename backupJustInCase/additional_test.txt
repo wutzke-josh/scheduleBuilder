@@ -1,6 +1,0 @@
-C Science,2
-eb01,13,14,true,mar,10
-eb02,9,10,true,saiyu,7
-C Sad,2
-eb01,10,11,true,hello,2
-eb02,11,14,true,this,7	

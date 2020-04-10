@@ -6,9 +6,15 @@
 # ============================
 
 Included Files:
-	README	
+	README
+	DEMO.mp4
 	ourschedule.cpp
 	Makefile
+		make targets:
+		- ourschedule (default)
+		- objects/ourschedule
+		- objects/schedule.o
+		- clean
 	schedule.cpp
 	schedule.h
 	sectionList.txt
@@ -16,27 +22,48 @@ Included Files:
 
 Running Instructions:
 	
-	Have all files in the same directory. Type make to make the ourschedule executable. Proceed to type ./ourschedule sectionList.txt to run the code. Enter your user preferences as indicated on the terminal. Be precise, as capitalization, spacing, and punctuation matter. To see the list of valid classes, open classList.txt.
+	Be in the working directory as unzipped. Type "make" to make the ourschedule executable.
+	Proceed to type "./ourschedule sectionList.txt" to run the code. Enter your user
+	preferences as indicated on the terminal. Be precise, as capitalization, spacing, and
+	punctuation matter. To see the list of valid classes, open classList.txt.
 
 Work Breakdown: 
 
 	COLLABORATED VIA GOOGLE HANGOUTS FOR ALMOST THE ENTIRE PROJECT
 
-	Josh: Contributed to design of algorithms for makeSchedule functions, as well as user preferences
+	Josh: Contributed to design of algorithms for makeSchedule functions,
+		  as well as user preferences
 	Sarah: Contributed to design of file parser and user interface
 	Jordan: Contributed to design of test files and checkConflict function
 
 Notes and Assumptions:
 
-	The program was designed under the assumption that the most classes encountered by a user will be 10 (as most students will not have 11+ classes in a schedule)
+	The program was designed under the assumption that the most classes encountered by a user
+	will be 10 (as most students will not have 11+ classes in a schedule)
 
-	The slow schedule maker runs a greedy algorithm on each permutation of the class vector to determine the optimal schedule. It should generally be used for inputs less than 8, as the difference in time between it and the fast schedule is very small. 
+	The slow schedule maker runs a greedy algorithm on each permutation of the class vector to
+	determine the optimal schedule. It should generally be used for inputs less than 8, as the
+	difference in time between it and the fast schedule is very small. 
 
-	The fast function does not necessarily produce the best schedule, but it will produce a reasonably good schedule in dramatically less time. Therefore, it should be used for larger inputs. 
+	The fast function does not necessarily produce the best schedule, but it will produce a
+	reasonably good schedule in dramatically less time making it good for larger inputs. 
 
+	If the input for the fast function is large enough, it may not be able to find any
+	schedule as it does not check enough permutations for inputs much above 10 classes.
+	Not to mention that at this point, time in the day starts to run out. 
 	
-	
-	
-	
-	
-	
+	We were not able to find an algorithm to build a schedule in our reseach so we had to make
+	our own. The overview of how this works is that all of the classes are stored in an
+	unordered_map where the key is a string identifying the course name and the value is a
+	vector containing all of the sections in a struct we made. This vector is sorted for each
+	class from the highest score to the lowest. Then, we have a vector that has the name of
+	each class that the user requested. We iterate through this with a greedy algoritm. We
+	load the first class from the map in order of the list and pick the highest rated class.
+	Then, we do this again with the next class but we continue down the section vector until
+	we find the highest rated schedule that doesn't conflict with anything found yet. Since
+	this won't specifically make the best schedule, we then have to different approaches. The
+	fast algorithm goes through the class list with a new offset each time to create different
+	schedules and compare them to the best on found. The slow algorithm uses the
+	next_permutation() function to check every permutation possible for that list, this is
+	quite slow as number of permutations grow in a factorial but produces the best output for
+	sizes up to 10 (as after 10 running time becomes unreasonable for the slow algorithm).

@@ -1,0 +1,50 @@
+Welcome to schedule builder!
+How many classes (including labs and seminars) will you be taking this semester? Please enter each class followed by the enter key 
+Do you have a preference for morning or afternoon classes? 
+Please select a preference (morning, afternoon, n/a): Would you like to run fast or in depth? (fast/slow): 
+Loading...
+
+SOC 225: 
+Section A1 with Andy Dufresne (rating = 7)
+on Tuesdays Thursdays from 11:30 to 13:00
+
+PHIL 366: 
+Section A2 with Kevin Oad (rating = 6)
+on Mondays Wednesdays Fridays from 15:00 to 16:00
+
+PHIL 366 SEM: 
+Section D31 with Minseok Bu (rating = 10)
+on Thursdays from 10:00 to 11:00
+
+MEC E 250 SEM: 
+Section D43 with Kaisa Szalay (rating = 9)
+on Thursdays from 9:00 to 10:00
+
+ECE 325: 
+Section EB02 with Gary Chang (rating = 9)
+on Mondays Wednesdays Fridays from 14:00 to 15:00
+
+ECE 340: 
+Section EA2 with Phuong Dao (rating = 5)
+on Tuesdays Thursdays from 8:00 to 9:00
+
+MEC E 250: 
+Section B2 with Catherine Karenina (rating = 9)
+on Mondays Wednesdays Fridays from 10:00 to 11:00
+
+ECE 325 LAB: 
+Section D34 with Xaliima Warsame (rating = 8)
+on Thursdays from 16:00 to 19:00
+
+MAT E 201: 
+Section B1 with Hashim Avery (rating = 5)
+on Mondays Wednesdays Fridays from 11:00 to 12:00
+
+MAT E 201 SEM: 
+Section D58 with Soomin Gwan (rating = 7)
+on Thursdays from 14:30 to 16:00
+
+ECE 340 SEM: 
+Section D43 with Nafula Adow (rating = 8)
+on Thursdays from 13:00 to 14:00
+
